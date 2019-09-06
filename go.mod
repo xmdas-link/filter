@@ -8,4 +8,5 @@ require (
 	github.com/iancoleman/strcase v0.0.0-20190422225806-e506e3ef7365
 	github.com/json-iterator/go v1.1.7
 	github.com/modern-go/reflect2 v1.0.1
+	github.com/xmdas-link/authorization v0.0.0-20190906091238-88768d70407d // indirect
 )

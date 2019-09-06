@@ -1,0 +1,7 @@
+# sub, model, field1|field2|filed3, action
+
+user, User, UserSalary|UserPwd, remove
+admin, User, UserMobile, sensitive
+
+alice, Profile, Photo, my_custom
+alice, School, SchoolCode, my_custom2

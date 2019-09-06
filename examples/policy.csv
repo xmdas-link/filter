@@ -1,0 +1,10 @@
+p, user, /school/list, (GET)|(POST), allow
+p, admin, /school/add, (GET)|(POST), allow
+p, alice, /person/list, (GET)|(POST), allow
+p, alice, /person/add, (GET)|(POST), allow
+p, bob, /school/list, (GET)|(POST), deny
+
+g, alice, admin
+g, bob, admin
+g, foo, user
+g, admin, user
