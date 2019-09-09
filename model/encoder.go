@@ -18,7 +18,7 @@ func (fm EncoderMap) AddEncoder(name string, fun Encoder) {
 func LoadEncoderMap() EncoderMap {
 	fm := make(EncoderMap)
 
-	// TODO add build-in function
+	// add more build-in function
 	fm.AddEncoder("remove", &omitEncoder{})         // 移除字段
 	fm.AddEncoder("sensitive", &sensitiveEncoder{}) // 脱敏
 

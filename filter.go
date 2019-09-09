@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/xmdas-link/auth"
+
 	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/iancoleman/strcase"
@@ -43,7 +45,6 @@ func NewDataFilter(filter *Filter) gin.HandlerFunc {
 
 		ret, _ := json.Marshal(obj)
 
-		// TODO 返回统一数据结构
 		context.Data(http.StatusOK, "application/json; charset=utf-8", ret)
 	}
 }
@@ -116,13 +117,16 @@ func NewFilter(modelPath string, enforcer *casbin.Enforcer) (*Filter, error) {
 }
 
 func (f *Filter) GetUserName(ctx *gin.Context) string {
-	// TODO get user name
-	return ctx.DefaultQuery("username", "")
+	user := ctx.GetStringMapString(auth.CtxKeyAuthUser)
+	if userName, ok := user["name"]; ok {
+		return userName
+	}
+	return ""
 }
 
 func (f *Filter) GetUserRole(ctx *gin.Context) string {
-	// TODO get user role from gin.context
-	return ctx.DefaultQuery("rolename", "admin")
+	userRole := ctx.GetString(auth.CtxKeyUserRole)
+	return userRole
 }
 
 // sub, obj

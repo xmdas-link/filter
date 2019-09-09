@@ -100,8 +100,12 @@ func getSchool(ctx *gin.Context) {
 	}
 
 	ctx.JSON(200, filter.H{
-		Ctx:  ctx,
-		Data: user,
+		Ctx: ctx,
+		Data: gin.H{
+			"code":    1,
+			"message": "",
+			"data":    user,
+		},
 	})
 }
 
@@ -124,13 +128,23 @@ func postSchool(ctx *gin.Context) {
 		SchoolCode: "codetest",
 	}
 
-	// set to context
-	ctx.Set(filter.ContextTmpObjKey, school)
-
 	ctx.JSON(200, filter.H{
-		Ctx:  ctx,
-		Data: school,
+		Ctx: ctx,
+		Data: gin.H{
+			"code":    1,
+			"message": "",
+			"data":    school,
+		},
 	})
+
+	//// fail response
+	//ctx.JSON(200, filter.H{
+	//	Ctx: ctx,
+	//	Data: gin.H{
+	//		"code":    0,
+	//		"message": "err info",
+	//	},
+	//})
 }
 
 func getPerson(ctx *gin.Context) {
