@@ -99,4 +99,3 @@ func (encoder *myEncoder) IsEmpty(ptr unsafe.Pointer) bool {
 // 全局注册
 dataFilter.AddEncoder("my_custom", &myEncoder{})
 ```
-
