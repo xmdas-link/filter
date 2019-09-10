@@ -118,7 +118,7 @@ func NewFilter(modelPath string, enforcer *casbin.Enforcer) (*Filter, error) {
 
 func (f *Filter) GetUserName(ctx *gin.Context) string {
 	user := ctx.GetStringMapString(auth.CtxKeyAuthUser)
-	if userName, ok := user["name"]; ok {
+	if userName, ok := user["user"]; ok {
 		return userName
 	}
 	return ""
