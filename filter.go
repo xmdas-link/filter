@@ -22,6 +22,10 @@ var (
 	ContextTmpObjKey = "filter_tmp_obj_key"
 )
 
+type JSONAPI interface {
+	JsonAPI(jsoniter.API)
+}
+
 func NewDataFilter(filter *Filter) gin.HandlerFunc {
 
 	return func(context *gin.Context) {
@@ -40,8 +44,12 @@ func NewDataFilter(filter *Filter) gin.HandlerFunc {
 			return
 		}
 
-		// get current request user/role
-		json := filter.Process(context, obj)
+		// register filter rule
+		json := filter.Process(context)
+
+		if kittyJsonApi, ok := obj.(JSONAPI); ok {
+			kittyJsonApi.JsonAPI(json)
+		}
 
 		ret, _ := json.Marshal(obj)
 
@@ -130,7 +138,7 @@ func (f *Filter) GetUserRole(ctx *gin.Context) string {
 }
 
 // sub, obj
-func (f *Filter) Process(ctx *gin.Context, obj interface{}) jsoniter.API {
+func (f *Filter) Process(ctx *gin.Context) jsoniter.API {
 	jsonapi := jsoniter.Config{}.Froze()
 
 	if len(f.model.Policy) == 0 {
