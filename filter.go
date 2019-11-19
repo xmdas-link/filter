@@ -38,6 +38,16 @@ func NewDataFilter(filter *Filter) gin.HandlerFunc {
 
 		fw.fakeWrite = false
 
+		// 非json输出不走filter
+		contentType := context.Writer.Header().Get("Content-Type")
+		if contentType != "application/json; charset=utf-8" {
+			curbody := fw.body.Bytes()
+			newbody := bytes.ReplaceAll(curbody, []byte("[]"), []byte(""))
+
+			context.Writer.Write(newbody)
+			return
+		}
+
 		obj, ok := context.Get(ContextTmpObjKey)
 		if !ok {
 			context.Data(http.StatusOK, "application/json; charset=utf-8", fw.body.Bytes())
